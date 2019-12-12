@@ -64,7 +64,7 @@ android {
         //required
         implementation project(':artplayer-java')
         //default controller panel: optional
-        implementation project(':artplayer-ui')
+//        implementation project(':artplayer-ui')
 
         //ExoPlayer : optional
         //implementation "org.salient.artvideoplayer:artplayer-exo:$rootProject.libraryVersionName"
