@@ -23,6 +23,12 @@ import org.salient.artvideoplayer.activity.list.ListActivity;
 import org.salient.artvideoplayer.activity.orientation.OrientationActivity;
 import org.salient.artvideoplayer.activity.tiny.TinyWindowActivity;
 
+/**
+ *
+ * Demo主页
+ *
+ * @author maiwenchang
+ */
 public class MainActivity extends BaseActivity {
 
     private VideoView videoView;
