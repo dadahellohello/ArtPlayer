@@ -9,8 +9,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 
-import org.salient.artplayer.MediaPlayerManager;
 import org.salient.artplayer.VideoView;
+import org.salient.artplayer.WindowType;
 import org.salient.artplayer.ui.ControlPanel;
 import org.salient.artvideoplayer.BaseActivity;
 import org.salient.artvideoplayer.DensityUtil;
@@ -105,7 +105,7 @@ public class TinyWindowActivity extends BaseActivity {
 
 
                 VideoView tinyVideoView = new VideoView(this);
-                tinyVideoView.setUp("http://vfx.mtime.cn/Video/2018/06/06/mp4/180606101738263858.mp4", VideoView.WindowType.TINY);
+                tinyVideoView.setUp("http://vfx.mtime.cn/Video/2018/06/06/mp4/180606101738263858.mp4", WindowType.TINY);
                 ControlPanel controlPanel = new ControlPanel(this);
                 tinyVideoView.setControlPanel(controlPanel);
                 tinyVideoView.start();

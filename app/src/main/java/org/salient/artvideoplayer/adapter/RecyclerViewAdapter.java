@@ -15,6 +15,7 @@ import org.salient.artplayer.Comparator;
 import org.salient.artplayer.MediaPlayerManager;
 import org.salient.artplayer.OnWindowDetachedListener;
 import org.salient.artplayer.VideoView;
+import org.salient.artplayer.WindowType;
 import org.salient.artvideoplayer.R;
 import org.salient.artvideoplayer.bean.VideoBean;
 import org.salient.artplayer.ui.ControlPanel;
@@ -84,7 +85,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Log.d("testt", "onBindViewHolder position:" + position + "hashCode : " + holder.videoView.hashCode());
         VideoBean videoBean = mList.get(holder.getAdapterPosition());
         videoBean.setListPosition(position);
-        holder.videoView.setUp(videoBean.getUrl(), VideoView.WindowType.LIST, videoBean);
+        holder.videoView.setUp(videoBean.getUrl(), WindowType.LIST, videoBean);
 
         // 瀑布流时，手动更改高度，使不同位置的高度有所不同
         if (isStaggeredGridLayoutManager) {

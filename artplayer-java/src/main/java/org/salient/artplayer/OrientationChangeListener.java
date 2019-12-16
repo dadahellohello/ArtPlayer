@@ -1,6 +1,5 @@
 package org.salient.artplayer;
 
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 
 /**
@@ -20,7 +19,7 @@ public class OrientationChangeListener implements OrientationEventManager.OnOrie
         newVideoView.setParentVideoView(videoView);
         //optional: set ControlPanel
         newVideoView.setControlPanel(videoView.getControlPanel());
-        newVideoView.setUp(videoView.getDataSourceObject(), VideoView.WindowType.FULLSCREEN, videoView.getData());
+        newVideoView.setUp(videoView.getDataSourceObject(), WindowType.FULLSCREEN, videoView.getData());
         //start fullscreen
         newVideoView.startFullscreen(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
@@ -32,7 +31,7 @@ public class OrientationChangeListener implements OrientationEventManager.OnOrie
         VideoView newVideoView = new VideoView(videoView.getContext());
         //set parent
         newVideoView.setParentVideoView(videoView);
-        newVideoView.setUp(videoView.getDataSourceObject(), VideoView.WindowType.FULLSCREEN, videoView.getData());
+        newVideoView.setUp(videoView.getDataSourceObject(), WindowType.FULLSCREEN, videoView.getData());
         //optional: set ControlPanel
         newVideoView.setControlPanel(videoView.getControlPanel());
         //start fullscreen
@@ -47,7 +46,7 @@ public class OrientationChangeListener implements OrientationEventManager.OnOrie
         if (parentVideoView != null) {
             parentVideoView.setControlPanel(videoView.getControlPanel());
         }
-        if (videoView.getWindowType() == VideoView.WindowType.FULLSCREEN) {
+        if (videoView.getWindowType() == WindowType.FULLSCREEN) {
             videoView.exitFullscreen();
         }
     }

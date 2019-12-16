@@ -8,6 +8,7 @@ import android.view.Surface;
 
 import org.salient.artplayer.AbsMediaPlayer;
 import org.salient.artplayer.MediaPlayerManager;
+import org.salient.artplayer.PlayerState;
 import org.salient.artplayer.VideoView;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
@@ -28,7 +29,7 @@ public class IjkPlayer extends AbsMediaPlayer implements IMediaPlayer.OnPrepared
         try {
             if (mediaPlayer != null) {
                 mediaPlayer.start();
-                MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PLAYING);
+                MediaPlayerManager.instance().updateState(PlayerState.PLAYING);
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -38,7 +39,7 @@ public class IjkPlayer extends AbsMediaPlayer implements IMediaPlayer.OnPrepared
     @Override
     public void prepare() {
         try {
-            MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PREPARING);
+            MediaPlayerManager.instance().updateState(PlayerState.PREPARING);
             mediaPlayer = new tv.danmaku.ijk.media.player.IjkMediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setOnPreparedListener(this);
@@ -70,7 +71,7 @@ public class IjkPlayer extends AbsMediaPlayer implements IMediaPlayer.OnPrepared
             mediaPlayer.prepareAsync();
         } catch (Exception e) {
             e.printStackTrace();
-            MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.ERROR);
+            MediaPlayerManager.instance().updateState(PlayerState.ERROR);
         }
     }
 
@@ -79,7 +80,7 @@ public class IjkPlayer extends AbsMediaPlayer implements IMediaPlayer.OnPrepared
         try {
             if (mediaPlayer != null) {
                 mediaPlayer.pause();
-                MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PAUSED);
+                MediaPlayerManager.instance().updateState(PlayerState.PAUSED);
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -113,7 +114,7 @@ public class IjkPlayer extends AbsMediaPlayer implements IMediaPlayer.OnPrepared
             if (mediaPlayer != null) {
                 mediaPlayer.release();
                 mediaPlayer = null;
-                MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.IDLE);
+                MediaPlayerManager.instance().updateState(PlayerState.IDLE);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -221,13 +222,13 @@ public class IjkPlayer extends AbsMediaPlayer implements IMediaPlayer.OnPrepared
 
     @Override
     public void onPrepared(IMediaPlayer iMediaPlayer) {
-        MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PREPARED);
+        MediaPlayerManager.instance().updateState(PlayerState.PREPARED);
         MediaPlayerManager.instance().start();
     }
 
     @Override
     public void onCompletion(IMediaPlayer iMediaPlayer) {
-        MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PLAYBACK_COMPLETED);
+        MediaPlayerManager.instance().updateState(PlayerState.PLAYBACK_COMPLETED);
     }
 
     @Override
@@ -246,7 +247,7 @@ public class IjkPlayer extends AbsMediaPlayer implements IMediaPlayer.OnPrepared
 
     @Override
     public boolean onError(IMediaPlayer iMediaPlayer, int i, int i1) {
-        MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.ERROR);
+        MediaPlayerManager.instance().updateState(PlayerState.ERROR);
         return true;
     }
 

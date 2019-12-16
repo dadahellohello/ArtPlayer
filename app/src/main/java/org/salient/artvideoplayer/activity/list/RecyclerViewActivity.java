@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import org.salient.artplayer.MediaPlayerManager;
 import org.salient.artplayer.OnWindowDetachedListener;
 import org.salient.artplayer.VideoView;
+import org.salient.artplayer.WindowType;
 import org.salient.artvideoplayer.BaseActivity;
 import org.salient.artvideoplayer.DensityUtil;
 import org.salient.artvideoplayer.R;
@@ -95,7 +96,7 @@ public class RecyclerViewActivity extends BaseActivity {
                                 //开启小窗
                                 VideoView tinyVideoView = new VideoView(videoView.getContext());
                                 //set url and data
-                                tinyVideoView.setUp(videoView.getDataSourceObject(), VideoView.WindowType.TINY, videoView.getData());
+                                tinyVideoView.setUp(videoView.getDataSourceObject(), WindowType.TINY, videoView.getData());
                                 //set control panel
                                 ControlPanel controlPanel = new ControlPanel(videoView.getContext());
                                 tinyVideoView.setControlPanel(controlPanel);

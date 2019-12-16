@@ -18,9 +18,11 @@ import android.widget.TextView;
 
 import org.salient.artplayer.AbsControlPanel;
 import org.salient.artplayer.MediaPlayerManager;
+import org.salient.artplayer.PlayerState;
 import org.salient.artplayer.R;
 import org.salient.artplayer.Utils;
 import org.salient.artplayer.VideoView;
+import org.salient.artplayer.WindowType;
 
 /**
  *  Created by Mai on 2018/7/10
@@ -118,7 +120,7 @@ public class ControlPanel extends AbsControlPanel {
                 if (!mTarget.isCurrentPlaying()) {
                     return;
                 }
-                if (MediaPlayerManager.instance().getPlayerState() == MediaPlayerManager.PlayerState.PLAYING) {
+                if (MediaPlayerManager.instance().getPlayerState() == PlayerState.PLAYING) {
                     cancelDismissTask();
                     if (layout_bottom.getVisibility() != VISIBLE) {
                         showUI(layout_bottom, layout_top);
@@ -204,7 +206,7 @@ public class ControlPanel extends AbsControlPanel {
         cbBottomPlay.setChecked(false);
         hideUI(layout_bottom, loading);
         showUI(start);
-        if (mTarget.getWindowType() == VideoView.WindowType.FULLSCREEN || mTarget.getWindowType() == VideoView.WindowType.TINY) {
+        if (mTarget.getWindowType() == WindowType.FULLSCREEN || mTarget.getWindowType() == WindowType.TINY) {
             showUI(layout_top);
         }
     }
@@ -239,7 +241,7 @@ public class ControlPanel extends AbsControlPanel {
 
     @Override
     public void onEnterSecondScreen() {
-        if (mTarget != null && mTarget.getWindowType() == VideoView.WindowType.FULLSCREEN) {
+        if (mTarget != null && mTarget.getWindowType() == WindowType.FULLSCREEN) {
             hideUI(ivRight);
         }
         showUI(ivLeft);
@@ -248,7 +250,7 @@ public class ControlPanel extends AbsControlPanel {
 
     @Override
     public void onExitSecondScreen() {
-        if (mTarget != null && mTarget.getWindowType() != VideoView.WindowType.TINY) {
+        if (mTarget != null && mTarget.getWindowType() != WindowType.TINY) {
             ivLeft.setVisibility(GONE);
         }
         showUI(ivRight);
@@ -277,8 +279,8 @@ public class ControlPanel extends AbsControlPanel {
             vpup.requestDisallowInterceptTouchEvent(false);
             vpup = vpup.getParent();
         }
-        if (MediaPlayerManager.instance().getPlayerState() != MediaPlayerManager.PlayerState.PLAYING &&
-                MediaPlayerManager.instance().getPlayerState() != MediaPlayerManager.PlayerState.PAUSED)
+        if (MediaPlayerManager.instance().getPlayerState() != PlayerState.PLAYING &&
+                MediaPlayerManager.instance().getPlayerState() != PlayerState.PAUSED)
             return;
         long time = (long) (seekBar.getProgress() * 1.00 / 100 * MediaPlayerManager.instance().getDuration());
         MediaPlayerManager.instance().seekTo(time);
@@ -316,19 +318,19 @@ public class ControlPanel extends AbsControlPanel {
         int id = v.getId();
         if (id == R.id.ivLeft) {//返回
             if (mTarget == null) return;
-            if (mTarget.getWindowType() == VideoView.WindowType.FULLSCREEN) {
+            if (mTarget.getWindowType() == WindowType.FULLSCREEN) {
                 mTarget.exitFullscreen();
-            } else if (mTarget.getWindowType() == VideoView.WindowType.TINY) {
+            } else if (mTarget.getWindowType() == WindowType.TINY) {
                 mTarget.exitTinyWindow();
             }
         } else if (id == R.id.ivRight) {//全屏
             if (mTarget == null) return;
-            if (mTarget.getWindowType() != VideoView.WindowType.FULLSCREEN) {
+            if (mTarget.getWindowType() != WindowType.FULLSCREEN) {
                 //new VideoView
                 VideoView videoView = new VideoView(getContext());
                 //set parent
                 videoView.setParentVideoView(mTarget);
-                videoView.setUp(mTarget.getDataSourceObject(), VideoView.WindowType.FULLSCREEN, mTarget.getData());
+                videoView.setUp(mTarget.getDataSourceObject(), WindowType.FULLSCREEN, mTarget.getData());
                 videoView.setControlPanel(new ControlPanel(getContext()));
                 //start fullscreen0
                 videoView.startFullscreen(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
@@ -402,8 +404,8 @@ public class ControlPanel extends AbsControlPanel {
         } else {
             ivVolume.setChecked(true);
         }
-        if (MediaPlayerManager.instance().getPlayerState() != MediaPlayerManager.PlayerState.PLAYING
-                && MediaPlayerManager.instance().getPlayerState() != MediaPlayerManager.PlayerState.PAUSED) {
+        if (MediaPlayerManager.instance().getPlayerState() != PlayerState.PLAYING
+                && MediaPlayerManager.instance().getPlayerState() != PlayerState.PAUSED) {
             showUI(start);
         } else {
             hideUI(start);

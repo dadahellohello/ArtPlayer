@@ -27,7 +27,7 @@ public class SystemMediaPlayer extends AbsMediaPlayer implements MediaPlayer.OnP
         try {
             if (mediaPlayer != null) {
                 mediaPlayer.start();
-                MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PLAYING);
+                MediaPlayerManager.instance().updateState(PlayerState.PLAYING);
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class SystemMediaPlayer extends AbsMediaPlayer implements MediaPlayer.OnP
     @Override
     public void prepare() {
         try {
-            MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PREPARING);
+            MediaPlayerManager.instance().updateState(PlayerState.PREPARING);
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setOnPreparedListener(this);
@@ -68,7 +68,7 @@ public class SystemMediaPlayer extends AbsMediaPlayer implements MediaPlayer.OnP
             mediaPlayer.prepareAsync();
         } catch (Exception e) {
             e.printStackTrace();
-            MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.ERROR);
+            MediaPlayerManager.instance().updateState(PlayerState.ERROR);
         }
     }
 
@@ -77,7 +77,7 @@ public class SystemMediaPlayer extends AbsMediaPlayer implements MediaPlayer.OnP
         try {
             if (mediaPlayer != null) {
                 mediaPlayer.pause();
-                MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PAUSED);
+                MediaPlayerManager.instance().updateState(PlayerState.PAUSED);
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -110,7 +110,7 @@ public class SystemMediaPlayer extends AbsMediaPlayer implements MediaPlayer.OnP
         try {
             if (mediaPlayer != null) {
                 mediaPlayer.release();
-                MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.IDLE);
+                MediaPlayerManager.instance().updateState(PlayerState.IDLE);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,13 +218,13 @@ public class SystemMediaPlayer extends AbsMediaPlayer implements MediaPlayer.OnP
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
-        MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PREPARED);
+        MediaPlayerManager.instance().updateState(PlayerState.PREPARED);
         MediaPlayerManager.instance().start();
     }
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PLAYBACK_COMPLETED);
+        MediaPlayerManager.instance().updateState(PlayerState.PLAYBACK_COMPLETED);
     }
 
     @Override
@@ -243,7 +243,7 @@ public class SystemMediaPlayer extends AbsMediaPlayer implements MediaPlayer.OnP
 
     @Override
     public boolean onError(MediaPlayer mediaPlayer, final int what, final int extra) {
-        MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.ERROR);
+        MediaPlayerManager.instance().updateState(PlayerState.ERROR);
         return true;
     }
 

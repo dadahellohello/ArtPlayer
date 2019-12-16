@@ -16,9 +16,11 @@ import android.widget.TextView;
 
 import org.salient.artplayer.AbsControlPanel;
 import org.salient.artplayer.MediaPlayerManager;
+import org.salient.artplayer.PlayerState;
 import org.salient.artplayer.R;
 import org.salient.artplayer.Utils;
 import org.salient.artplayer.VideoView;
+import org.salient.artplayer.WindowType;
 
 /**
  * Created by Mai on 2018/8/7
@@ -98,13 +100,13 @@ public class VideoGestureListener extends GestureDetector.SimpleOnGestureListene
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         VideoView target = mControlPanel.getTarget();
         if (target == null) return false;
-        if (target.getWindowType() == VideoView.WindowType.TINY) {//小窗
+        if (target.getWindowType() == WindowType.TINY) {//小窗
             if (e2.getPointerCount() == 1) {//单指移动
                 return moveWindow(target, e1, e2);
             } else if (e2.getPointerCount() == 2) {//双指缩放
                 return zoomWindow(target, e1, e2);
             }
-        } else if (target.getWindowType() == VideoView.WindowType.FULLSCREEN) {//全屏
+        } else if (target.getWindowType() == WindowType.FULLSCREEN) {//全屏
             if (e2.getPointerCount() == 1) {//单指移动
                 float mOldX = e1.getX(), mOldY = e1.getY();
                 int x = (int) e2.getRawX();
@@ -141,8 +143,8 @@ public class VideoGestureListener extends GestureDetector.SimpleOnGestureListene
      * @param seekDistance
      */
     private void onSeekProgressControl(float seekDistance) {
-        if (MediaPlayerManager.instance().getPlayerState() != MediaPlayerManager.PlayerState.PLAYING &&
-                MediaPlayerManager.instance().getPlayerState() != MediaPlayerManager.PlayerState.PAUSED)
+        if (MediaPlayerManager.instance().getPlayerState() != PlayerState.PLAYING &&
+                MediaPlayerManager.instance().getPlayerState() != PlayerState.PAUSED)
             return;
         preDuration = seekBar.getProgress() + (int) ((seekDistance / currentWidth) * 30);
         if (preDuration > 100) {
@@ -354,8 +356,8 @@ public class VideoGestureListener extends GestureDetector.SimpleOnGestureListene
                 AbsControlPanel absControlPanel = (AbsControlPanel) v;
                 VideoView target = absControlPanel.getTarget();
                 if (target != null) {
-                    VideoView.WindowType windowType = target.getWindowType();
-                    if (windowType == VideoView.WindowType.TINY) {
+                    WindowType windowType = target.getWindowType();
+                    if (windowType == WindowType.TINY) {
                         revisePosition(target);
                     }
                 }

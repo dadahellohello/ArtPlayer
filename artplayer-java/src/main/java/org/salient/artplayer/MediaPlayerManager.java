@@ -195,7 +195,7 @@ public class MediaPlayerManager implements TextureView.SurfaceTextureListener {
         mediaPlayer.setHeaders(null);
         mediaPlayer.setDataSource(null);
         mCurrentData = null;
-        updateState(MediaPlayerManager.PlayerState.IDLE);
+        updateState(PlayerState.IDLE);
     }
 
     /**
@@ -368,7 +368,7 @@ public class MediaPlayerManager implements TextureView.SurfaceTextureListener {
         Log.i(TAG, "backPress");
         try {
             VideoView currentVideoView = getCurrentVideoView();
-            if (currentVideoView != null && currentVideoView.getWindowType() == VideoView.WindowType.FULLSCREEN) {//退出全屏
+            if (currentVideoView != null && currentVideoView.getWindowType() == WindowType.FULLSCREEN) {//退出全屏
                 currentVideoView.exitFullscreen();
                 return true;
             }
@@ -437,17 +437,6 @@ public class MediaPlayerManager implements TextureView.SurfaceTextureListener {
 
     public void setCurrentData(Object mCurrentData) {
         this.mCurrentData = mCurrentData;
-    }
-
-    // all possible MediaPlayer states
-    public enum PlayerState {
-        ERROR,
-        IDLE,
-        PREPARING,
-        PREPARED,
-        PLAYING,
-        PAUSED,
-        PLAYBACK_COMPLETED
     }
 
     //内部类实现单例模式

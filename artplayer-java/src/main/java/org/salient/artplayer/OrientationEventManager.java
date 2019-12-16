@@ -76,12 +76,12 @@ public class OrientationEventManager {
         if (videoView != null) {
             if (currentOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE) return;
             if (currentOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                    && (videoView.getWindowType() == VideoView.WindowType.FULLSCREEN)) {
+                    && (videoView.getWindowType() == WindowType.FULLSCREEN)) {
                 currentOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
                 return;
             }
             currentOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
-            if (videoView.getWindowType() != VideoView.WindowType.FULLSCREEN) {
+            if (videoView.getWindowType() != WindowType.FULLSCREEN) {
                 if (mOrientationChangeListener != null) {
                     mOrientationChangeListener.onOrientationLandscape(videoView);
                 }
@@ -99,12 +99,12 @@ public class OrientationEventManager {
         if (videoView != null) {
             if (currentOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE) return;
             if (currentOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                    && (videoView.getWindowType() == VideoView.WindowType.FULLSCREEN)) {
+                    && (videoView.getWindowType() == WindowType.FULLSCREEN)) {
                 currentOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
                 return;
             }
             currentOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
-            if (videoView.getWindowType() != VideoView.WindowType.FULLSCREEN) {
+            if (videoView.getWindowType() != WindowType.FULLSCREEN) {
                 if (mOrientationChangeListener != null) {
                     mOrientationChangeListener.onOrientationReverseLandscape(videoView);
                 }
@@ -125,7 +125,7 @@ public class OrientationEventManager {
             }
             if ((currentOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                     || currentOrientation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE)
-                    && !(videoView.getWindowType() == VideoView.WindowType.FULLSCREEN)) {
+                    && !(videoView.getWindowType() == WindowType.FULLSCREEN)) {
                 currentOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
                 return;
             }

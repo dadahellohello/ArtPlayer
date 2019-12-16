@@ -3,7 +3,7 @@ package org.salient.artplayer;
 /**
  * Created by Mai on 2018/8/9
  * *
- * Description:
+ * Description: 缩放模式
  * *
  */
 public enum ScaleType {

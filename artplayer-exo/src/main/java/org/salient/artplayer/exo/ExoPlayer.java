@@ -2,8 +2,6 @@ package org.salient.artplayer.exo;
 
 import android.app.Service;
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -35,6 +33,7 @@ import com.google.android.exoplayer2.upstream.RawResourceDataSource;
 
 import org.salient.artplayer.AbsMediaPlayer;
 import org.salient.artplayer.MediaPlayerManager;
+import org.salient.artplayer.PlayerState;
 import org.salient.artplayer.VideoView;
 
 import java.io.IOException;
@@ -66,7 +65,7 @@ public class ExoPlayer extends AbsMediaPlayer implements Player.EventListener, A
         try {
             if (mediaPlayer != null) {
                 mediaPlayer.setPlayWhenReady(true);
-                MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PLAYING);
+                MediaPlayerManager.instance().updateState(PlayerState.PLAYING);
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -76,7 +75,7 @@ public class ExoPlayer extends AbsMediaPlayer implements Player.EventListener, A
     @Override
     public void prepare() {
         try {
-            MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PREPARING);
+            MediaPlayerManager.instance().updateState(PlayerState.PREPARING);
             // 1. Create a default TrackSelector
             TrackSelection.Factory videoTrackSelectionFactory =
                     new AdaptiveTrackSelection.Factory(new DefaultBandwidthMeter());
@@ -116,7 +115,7 @@ public class ExoPlayer extends AbsMediaPlayer implements Player.EventListener, A
             mediaPlayer.setPlayWhenReady(true);
         } catch (Exception e) {
             e.printStackTrace();
-            MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.ERROR);
+            MediaPlayerManager.instance().updateState(PlayerState.ERROR);
         }
     }
 
@@ -125,7 +124,7 @@ public class ExoPlayer extends AbsMediaPlayer implements Player.EventListener, A
         try {
             if (mediaPlayer != null) {
                 mediaPlayer.setPlayWhenReady(false);
-                MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PAUSED);
+                MediaPlayerManager.instance().updateState(PlayerState.PAUSED);
             }
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -163,7 +162,7 @@ public class ExoPlayer extends AbsMediaPlayer implements Player.EventListener, A
             if (mediaPlayer != null) {
                 mediaPlayer.release();
                 mediaPlayer = null;
-                MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.IDLE);
+                MediaPlayerManager.instance().updateState(PlayerState.IDLE);
             }
             startProgressTimer();
         } catch (Exception e) {
@@ -287,9 +286,9 @@ public class ExoPlayer extends AbsMediaPlayer implements Player.EventListener, A
     @Override
     public void onLoadingChanged(boolean isLoading) {
         if (isLoading) {
-            MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PREPARING);
-        } else if (MediaPlayerManager.instance().getPlayerState() == MediaPlayerManager.PlayerState.PREPARING) {
-            MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PREPARED);
+            MediaPlayerManager.instance().updateState(PlayerState.PREPARING);
+        } else if (MediaPlayerManager.instance().getPlayerState() == PlayerState.PREPARING) {
+            MediaPlayerManager.instance().updateState(PlayerState.PREPARED);
         }
     }
 
@@ -300,18 +299,18 @@ public class ExoPlayer extends AbsMediaPlayer implements Player.EventListener, A
             int state = mediaPlayer.getPlaybackState();
             switch (state) {
                 case Player.STATE_IDLE:
-                    MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.IDLE);
+                    MediaPlayerManager.instance().updateState(PlayerState.IDLE);
                     break;
                 case Player.STATE_READY:
                     if (mediaPlayer.getPlayWhenReady()) {
-                        MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PLAYING);
+                        MediaPlayerManager.instance().updateState(PlayerState.PLAYING);
                     }
                     break;
                 case Player.STATE_BUFFERING:
                     startProgressTimer();
                     break;
                 case Player.STATE_ENDED:
-                    MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.PLAYBACK_COMPLETED);
+                    MediaPlayerManager.instance().updateState(PlayerState.PLAYBACK_COMPLETED);
                     break;
             }
         } catch (Exception e) {
@@ -398,7 +397,7 @@ public class ExoPlayer extends AbsMediaPlayer implements Player.EventListener, A
 
     @Override
     public void onPlayerError(EventTime eventTime, ExoPlaybackException error) {
-        MediaPlayerManager.instance().updateState(MediaPlayerManager.PlayerState.ERROR);
+        MediaPlayerManager.instance().updateState(PlayerState.ERROR);
     }
 
     @Override
@@ -560,8 +559,8 @@ public class ExoPlayer extends AbsMediaPlayer implements Player.EventListener, A
             if (mediaPlayer == null) return;
             int percentage = mediaPlayer.getBufferedPercentage();
             if (percentage <= 100) {
-                MediaPlayerManager.PlayerState playerState = MediaPlayerManager.instance().getPlayerState();
-                if (playerState == MediaPlayerManager.PlayerState.PLAYING || playerState == MediaPlayerManager.PlayerState.PAUSED) {
+                PlayerState playerState = MediaPlayerManager.instance().getPlayerState();
+                if (playerState == PlayerState.PLAYING || playerState == PlayerState.PAUSED) {
                     if (MediaPlayerManager.instance().getCurrentControlPanel() != null) {
                         MediaPlayerManager.instance().getCurrentControlPanel().onBufferingUpdate(percentage);
                     }

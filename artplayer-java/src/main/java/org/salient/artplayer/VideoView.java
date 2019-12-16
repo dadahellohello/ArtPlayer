@@ -247,9 +247,9 @@ public class VideoView extends FrameLayout {
         //clear videoView opened before
         VideoView currentVideoView = MediaPlayerManager.instance().getCurrentVideoView();
         if (currentVideoView != null && currentVideoView != this) {
-            if (getWindowType() != VideoView.WindowType.TINY) {
+            if (getWindowType() != WindowType.TINY) {
                 MediaPlayerManager.instance().clearTinyLayout(context);
-            } else if (getWindowType() != VideoView.WindowType.FULLSCREEN) {
+            } else if (getWindowType() != WindowType.FULLSCREEN) {
                 MediaPlayerManager.instance().clearFullscreenLayout(context);
             }
         }
@@ -274,7 +274,7 @@ public class VideoView extends FrameLayout {
      */
     public void pause() {
         if (isCurrentPlaying()) {
-            if (MediaPlayerManager.instance().getPlayerState() == MediaPlayerManager.PlayerState.PLAYING) {
+            if (MediaPlayerManager.instance().getPlayerState() == PlayerState.PLAYING) {
                 Log.d(TAG, "pause [" + this.hashCode() + "] ");
                 MediaPlayerManager.instance().pause();
             }
@@ -393,7 +393,7 @@ public class VideoView extends FrameLayout {
                     "You must call removeView() on the VideoView's parent first.");
         }
         Context context = getContext();
-        setWindowType(VideoView.WindowType.FULLSCREEN);
+        setWindowType(WindowType.FULLSCREEN);
         Utils.hideSupportActionBar(context);
         // add to window
         ViewGroup vp = (Utils.scanForActivity(context)).findViewById(Window.ID_ANDROID_CONTENT);
@@ -458,7 +458,7 @@ public class VideoView extends FrameLayout {
                     "You must call removeView() on the VideoView's parent first.");
         }
         Context context = getContext();
-        setWindowType(VideoView.WindowType.TINY);
+        setWindowType(WindowType.TINY);
 
         // add to window
         ViewGroup vp = (Utils.scanForActivity(context)).findViewById(Window.ID_ANDROID_CONTENT);
@@ -492,10 +492,4 @@ public class VideoView extends FrameLayout {
         MediaPlayerManager.instance().updateState(MediaPlayerManager.instance().getPlayerState());
     }
 
-    public enum WindowType {
-        NORMAL,
-        LIST,
-        FULLSCREEN,
-        TINY
-    }
 }

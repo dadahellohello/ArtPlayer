@@ -35,5 +35,18 @@ public class VideoInfo {
      */
     int volume;
 
+    /**
+     * 缩放模式
+     */
+    ScaleType scaleType;
 
+    /**
+     * 播放状态
+     */
+    PlayerState playerState;
+
+    /**
+     * 窗口状态
+     */
+    WindowType windowType;
 }
